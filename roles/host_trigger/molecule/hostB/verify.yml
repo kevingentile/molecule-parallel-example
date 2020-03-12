@@ -1,0 +1,24 @@
+---
+- name: Verify
+  hosts: hostB
+  tasks:
+    - name: check hostfileA
+      stat:
+        path: /etc/hostfiles/hostA.txt
+      register: host_a
+    - name: check hostfileB
+      stat:
+        path: /etc/hostfiles/hostB.txt
+      register: host_b
+    - name: check hostfileC
+      stat:
+        path: /etc/hostfiles/hostC.txt
+      register: host_c
+    - debug:
+        msg:
+          - "hostA exists: {{ host_a.stat.exists }}"
+          - "hostB exists: {{ host_b.stat.exists }}"
+          - "hostC exists: {{ host_c.stat.exists }}"
+    - name: assert files created
+      assert:
+        that: not host_a.stat.exists and host_b.stat.exists and not host_c.stat.exists

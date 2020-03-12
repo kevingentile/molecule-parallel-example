@@ -1,0 +1,29 @@
+---
+# tasks file for host_trigger
+- debug:
+    msg:
+      - "hostname: {{ inventory_hostname }}"
+
+- name: create hostfiles directory
+  file:
+    path: /etc/hostfiles
+    state: directory
+    mode: "0775"
+
+- name: if hostA, write file hostA.txt
+  copy:
+    src: hostA.txt
+    dest: /etc/hostfiles/hostA.txt
+  when: '"hostA" in inventory_hostname'
+
+- name: if hostB, write file hostB.txt
+  copy:
+    src: hostB.txt
+    dest: /etc/hostfiles/hostB.txt
+  when: '"hostB" in inventory_hostname'
+
+- name: if hostC, write file hostA.txt
+  copy:
+    src: hostC.txt
+    dest: /etc/hostfiles/hostC.txt
+  when: '"hostC" in inventory_hostname'

@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: hostB
+  tasks:
+    - name: "Include host_trigger"
+      include_role:
+        name: "host_trigger"
